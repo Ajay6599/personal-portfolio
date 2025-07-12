@@ -32,8 +32,10 @@ https://ajay-portfolio-personal.netlify.app/
 
 | Project | Description | Tech Used | Repo |
 |--------|-------------|-----------|------|
-| Portfolio Website | Personal website to showcase my skills and projects | React, Chakra UI, GitHub Pages | https://github.com/Ajay6599/personal-portfolio |
-| [Add your project] | [Short description] | [Tech used] | [Link] |
+| **Portfolio Website** | Personal website to showcase my skills and projects | React, Chakra UI, GitHub Pages | https://github.com/Ajay6599/personal-portfolio |
+| **Library Management System** | A full-stack web app to manage books, students, and issue/return operations. Admin can add/update/delete books and users. | MERN Stack | https://github.com/Ajay6599/library-management-system |
+| **Weather App** | A responsive app that shows real-time weather data for any city using the OpenWeatherMap API. Includes temperature, humidity, and conditions. | HTML, CSS, Javascript, API Integration, CSS | https://github.com/Ajay6599/weather-app |
+
 
 ## 📬 Contact Me
 
