@@ -8,7 +8,7 @@ const { contactUserController } = require('./contactUsers.controller');
 const app = express();
 const port = process.env.PORT || 8080;
 
-app.use(cors());
+// app.use(cors());
 
 // const corsOptions = {
 //   origin: 'https://ajay-portfolio-personal.netlify.app',
@@ -30,26 +30,26 @@ app.use(cors());
 
 // Middleware
 
-// const allowedOrigins = [
-//   'https://ajay-portfolio-personal.netlify.app',
-//   'http://localhost:3000',
-// ];
+const allowedOrigins = [
+  'https://ajay-portfolio-personal.netlify.app',
+  'http://localhost:3000',
+];
 
-// const corsOptions = {
-//   origin: function (origin, callback) {
-//     // Allow requests with no origin (like curl or mobile apps)
-//     if (!origin) return callback(null, true);
-//     if (allowedOrigins.includes(origin)) {
-//       return callback(null, true);
-//     } else {
-//       return callback(new Error('Not allowed by CORS'));
-//     }
-//   },
-//   methods: ['GET', 'POST'],
-//   allowedHeaders: ['Content-Type'],
-// };
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like curl or mobile apps)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type'],
+};
 
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 // app.options('*', cors(corsOptions));
 
 app.use(express.json());
