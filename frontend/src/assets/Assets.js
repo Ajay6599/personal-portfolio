@@ -42,12 +42,12 @@ export const educationData = [
 export const skills = [
     {
         lang: "HTML",
-        level: 75,
+        level: 80,
         desc: "Proficient in writing semantic HTML and structuring responsive layouts.",
     },
     {
         lang: "CSS",
-        level: 75,
+        level: 80,
         desc: "Experienced in styling layouts using Flexbox, Grid, and media queries.",
     },
     {
@@ -62,17 +62,17 @@ export const skills = [
     },
     {
         lang: "Node Js",
-        level: 75,
+        level: 65,
         desc: "Basic understanding of backend development and REST APIs using Node.js.",
     },
     {
         lang: "Express Js",
-        level: 75,
+        level: 65,
         desc: "Familiar with setting up routes, middleware, and building server-side logic.",
     },
     {
         lang: "MongoDb",
-        level: 75,
+        level: 65,
         desc: "Knowledge of data modeling, CRUD operations, and using Mongoose in projects.",
     },
 ];

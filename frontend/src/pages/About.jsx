@@ -77,21 +77,22 @@ export const About = () => {
                     </Heading>
 
                     <Text>
-                        Hi, I’m Ajay Prajapati — a passionate and motivated web developer based in Kanpur.
-                        <br />
-                        I’ve completed my Master’s degree in Computer Applications (MCA) and am excited to begin my professional journey in the world of web development.
-                        <br />
-                        My technical skills include HTML, CSS, JavaScript, React.js, Node.js, Express.js, and MongoDB. I enjoy solving problems with creative solutions and am dedicated to growing as a full stack web developer.
-                        <br />
-                        {/* During my studies, I worked on [specific project or course], where I gained experience in [relevant skills or technologies]. I've also completed internships at [Company Name or Freelance Work], where I was able to [mention accomplishments, e.g., develop websites, design logos, etc.]. */}
-                        {/* During my studies, I worked on academic projects that helped me build a solid foundation in both front-end and back-end technologies. */}
-                        I don't have professional work experience yet, I’ve been continuously learning through personal projects, online courses, and hands-on coding practice.
-                        <br />
-                        I’m currently seeking opportunities in full stack web development where I can apply my skills, collaborate with experienced teams, and continue learning in a real-world environment. I'm especially interested in building responsive, user-friendly web applications that create value and impact.
-                        <br />
-                        Outside of tech, I enjoy [your personal interest — e.g., exploring new technology, photography, playing games, traveling, or reading], which helps me stay inspired and bring fresh ideas to my work.
-                        <br />
-                        Feel free to check out my portfolio to see what I’ve been working on. I’d love to connect and explore potential opportunities!
+                        <p>
+                            Hi, I'm <strong>Ajay</strong>, a passionate and dedicated <strong>Full Stack Web Developer</strong> based in <strong>Kanpur, India</strong>. I recently completed my <strong>MERN Stack Developer</strong> training at <strong>Ducat Institute</strong> (Jan 2024 – Jan 2025), where I gained hands-on experience building dynamic and responsive web applications using <strong>MongoDB</strong>, <strong>Express.js</strong>, <strong>React.js</strong>, and <strong>Node.js</strong>.
+                        </p>
+                        <p>
+                            I hold a <strong>Master of Computer Applications (MCA)</strong> degree, which I completed in <strong>2022</strong>. After graduation, I took a gap year to explore my interests and deepen my understanding of real-world development before fully committing to learning modern web technologies.
+                        </p>
+                        <p>
+                            As a <strong>fresher</strong>, I may not have professional experience yet, but I bring strong problem-solving abilities, a solid grasp of programming fundamentals, and a genuine enthusiasm for continuous learning. I'm particularly focused on building scalable, user-friendly applications and constantly sharpening my front-end and back-end development skills.
+                        </p>
+                        <p>
+                            I'm currently seeking opportunities to contribute to a forward-thinking team where I can apply my knowledge and grow as a full stack developer.
+                        </p>
+                        <p>
+                            Feel free to explore my portfolio to see the projects I've been working on. I’d love to connect and discuss potential opportunities!
+                        </p>
+
                     </Text>
 
                 </Flex>
