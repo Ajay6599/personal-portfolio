@@ -17,7 +17,7 @@ export const educationData = [
         university: 'DUCAT IT Training School, Noida',
         course: 'MERN Full Stack Web Developer',
         year: '2024-2025',
-        description: 'Focused on full stack development, data structures, and software engineering.',
+        description: 'Trained in building dynamic web applications using MongoDB, Express.js, React.js, and Node.js, with hands-on projects covering frontend, backend, and REST API integration.',
     },
     {
         university: 'Dr. APJ Abdul Kalam Technical University, Lucknow',
