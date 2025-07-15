@@ -23,7 +23,7 @@ export const Home = () => {
                     lg: 'repeat(2, 1fr)'
                 }}
                 gap='2rem'
-                m={{base: 'auto', sm: '1rem 0', md: 'auto', lg: 'auto'}}
+                m={{ base: 'auto', sm: '1rem 0', md: 'auto', lg: 'auto' }}
                 alignItems='center'
             >
                 <Flex
@@ -123,18 +123,20 @@ export const Home = () => {
                             bgColor={themeColor}
                             color='white'
                         >
-                            <IconButton
-                                icon={<FaGithub size='24' />}
-                                variant='null'
-                                border={`1px solid ${themeColor}`}
-                                borderRadius='full'
-                                transition='all 0.5s ease-in-out'
-                                color={themeColor}
-                                _hover={{
-                                    backgroundColor: themeColor,
-                                    color: '#fff'
-                                }}
-                            />
+                            <a href="https://github.com/Ajay6599/" target="_blank" rel='noopener noreferrer'>
+                                <IconButton
+                                    icon={<FaGithub size='24' />}
+                                    variant='null'
+                                    border={`1px solid ${themeColor}`}
+                                    borderRadius='full'
+                                    transition='all 0.5s ease-in-out'
+                                    color={themeColor}
+                                    _hover={{
+                                        backgroundColor: themeColor,
+                                        color: '#fff'
+                                    }}
+                                />
+                            </a>
                         </Tooltip>
 
                         <Tooltip
@@ -143,18 +145,20 @@ export const Home = () => {
                             bgColor={themeColor}
                             color='white'
                         >
-                            <IconButton
-                                variant='null'
-                                border={`1px solid ${themeColor}`}
-                                borderRadius='full'
-                                icon={<FaLinkedinIn size='20' />}
-                                transition='all 0.5s ease-in-out'
-                                color={themeColor}
-                                _hover={{
-                                    backgroundColor: themeColor,
-                                    color: '#fff'
-                                }}
-                            />
+                            <a href="https://www.linkedin.com/in/ajayprajapati6599/" target="_blank" rel='noopener noreferrer'>
+                                <IconButton
+                                    variant='null'
+                                    border={`1px solid ${themeColor}`}
+                                    borderRadius='full'
+                                    icon={<FaLinkedinIn size='20' />}
+                                    transition='all 0.5s ease-in-out'
+                                    color={themeColor}
+                                    _hover={{
+                                        backgroundColor: themeColor,
+                                        color: '#fff'
+                                    }}
+                                />
+                            </a>
                         </Tooltip>
                     </Flex>
 
