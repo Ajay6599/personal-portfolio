@@ -14,6 +14,12 @@ export const userImage = {
 
 export const educationData = [
     {
+        university: 'DUCAT IT Training School, Noida',
+        course: 'MERN Full Stack Web Developer',
+        year: '2024-2025',
+        description: 'Focused on full stack development, data structures, and software engineering.',
+    },
+    {
         university: 'Dr. APJ Abdul Kalam Technical University, Lucknow',
         course: 'Master of Computer Application',
         year: '2020-2022',
@@ -85,12 +91,12 @@ export const personalData = [
     },
     {
         text: "Email",
-        info: "ajayprajapati@gmail.com",
+        info: "ajayprajapati6599@gmail.com",
         contact: <MdOutlineEmail size='20' />
     },
     {
         text: "Mobile",
-        info: "8887763091",
+        info: "8887763091, 8896788572",
         contact: <RiContactsBook2Line size='20' />
     },
 ];
