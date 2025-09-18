@@ -45,7 +45,6 @@ export const SwitchTheme = () => {
         });
         tl.from(themeIconRef.current, {
             opacity: 0,
-            // y: -10,
             duration: 0.8,
             stagger: 0.8,
             ease: "power2.in"
@@ -67,9 +66,9 @@ export const SwitchTheme = () => {
             // bgColor={isDrag ? themeColor : 'transparent'}
             right={{
                 base: isDrag ? '0rem' : '-9.75rem',
-                sm: isDrag ? '0rem' : '-9.5rem',
-                md: isDrag ? '0rem' : '-9.5rem',
-                lg: isDrag ? '0.1rem' : '-9.5rem'
+                sm: isDrag ? '0rem' : '-9.6rem',
+                md: isDrag ? '0rem' : '-9.6rem',
+                lg: isDrag ? '0rem' : '-9.6rem'
             }}
             top='2'
             w='12.5rem'
