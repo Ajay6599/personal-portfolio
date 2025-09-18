@@ -6,17 +6,20 @@ import reportWebVitals from './reportWebVitals';
 import { ChakraProvider } from '@chakra-ui/react';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeContextProvider } from './context/ThemeContextProvider';
+import { GsapContextProvider } from './context/GsapContextProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <ThemeContextProvider>
-      <BrowserRouter>
-        <ChakraProvider>
-          <App />
-        </ChakraProvider>
-      </BrowserRouter>
-    </ThemeContextProvider>
+    <GsapContextProvider>
+      <ThemeContextProvider>
+        <BrowserRouter>
+          <ChakraProvider>
+            <App />
+          </ChakraProvider>
+        </BrowserRouter>
+      </ThemeContextProvider>
+    </GsapContextProvider>
   </React.StrictMode>
 );
 

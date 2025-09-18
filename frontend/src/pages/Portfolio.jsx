@@ -1,23 +1,51 @@
-import { Divider, Flex, Grid, GridItem, Heading, IconButton, Image, Text, VStack } from "@chakra-ui/react";
+import { Box, Divider, Flex, Grid, GridItem, Heading, IconButton, Image, Text, VStack } from "@chakra-ui/react";
 import { projectDetails } from "../assets/Assets";
 import { RxArrowTopRight } from "react-icons/rx";
 import { FaGithub } from "react-icons/fa";
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import { ThemeContext } from "../context/ThemeContextProvider";
+import { useGSAP } from "@gsap/react";
+import { useLocation } from "react-router-dom";
+import gsap from "gsap";
 
 export const Portfolio = () => {
 
     const { themeColor, themeMode } = useContext(ThemeContext);
 
+    let location = useLocation();
+
+    let portfolioRef = useRef(null);
+    let projectRefs = useRef([]);
+
+    useGSAP(() => {
+        let tl = gsap.timeline();
+
+        tl.from(portfolioRef.current, {
+            opacity: 0,
+            y: -50,
+            duration: 0.8,
+            ease: "power2.out"
+        });
+        tl.from(projectRefs.current, {
+            opacity: 0,
+            duration: 0.8,
+            stagger: 0.8,
+            ease: "power2.out"
+        });
+        tl.play();
+        return () => {
+            tl.kill();
+        };
+    }, [location.pathname]);
+
     return (
         <VStack
             // border='1px solid red'
             w='84%'
-            // h='100vh'
             spacing={{ base: '12', sm: '12', md: '20', lg: '20' }}
-        // overflow='hidden'
+            zIndex='10'
         >
-            <Heading>
+            <Heading ref={portfolioRef}>
                 Portfolio
             </Heading>
 
@@ -29,13 +57,19 @@ export const Portfolio = () => {
                 {
                     projectDetails.map(({ projDesc, projGithub, projImg, projLink, projTech, projType }, idx) => (
                         <GridItem
-                            border={`1px solid ${themeColor}`}
+                            key={idx}
+                            ref={el => el && projectRefs.current.push(el)}
+                            // border={`1px solid ${themeColor}`}
                             p='0.25rem'
                             pos='relative'
                             role="group"
                             overflow='hidden'
                             rounded='md'
-                            key={idx}
+                            boxShadow={`0 0 4px 2px ${themeColor}`}
+                            _hover={{
+                                boxShadow: `0 0 4px 2px ${themeMode === 'light' ? '#111' : '#fff'}`
+                            }}
+                            cursor='pointer'
                         >
                             <Image
                                 src={projImg}
@@ -96,7 +130,7 @@ export const Portfolio = () => {
                                     </Text>
                                 </Flex>
 
-                                <Divider borderColor='#000' />
+                                <Divider borderColor='#fff' />
 
                                 <Flex
                                     // border='1px solid green'
@@ -106,24 +140,84 @@ export const Portfolio = () => {
                                 >
                                     <a href={projLink} target="_blank" rel='noopener noreferrer'>
                                         <IconButton
-                                            icon={<RxArrowTopRight size='24' color={themeMode === 'light' ? '#111' : '#fff'} />}
+                                            icon={
+                                                <Box className="animated-icon" color='#111'>
+                                                    <RxArrowTopRight size="24" />
+                                                </Box>
+                                            }
                                             variant='unstyled'
                                             rounded='full'
                                             display='flex'
                                             justifyContent='center'
-                                            bgColor={themeMode === 'light' ? '#fff' : '#111'}
+                                            bgColor='#fff'
+                                            onMouseEnter={(e) => {
+                                                const icon = e.currentTarget.querySelector('.animated-icon');
+                                                gsap.to(e.currentTarget, {
+                                                    backgroundColor: themeColor,
+                                                    boxShadow: '0 0 4px 2px #fff',
+                                                    duration: 1,
+                                                });
+                                                gsap.fromTo(icon,
+                                                    { x: -10, y: 14, opacity: 0 },
+                                                    { x: 0, y: 0, opacity: 1, color: '#fff', duration: 1, ease: 'power2.out' }
+                                                );
+                                            }}
+                                            onMouseLeave={(e) => {
+                                                const icon = e.currentTarget.querySelector('.animated-icon');
+                                                gsap.to(e.currentTarget, {
+                                                    backgroundColor: '#fff',
+                                                    boxShadow: `0 0 4px 2px #111`,
+                                                    duration: 1,
+                                                });
+                                                gsap.to(icon, {
+                                                    opacity: 1,
+                                                    color: '#111',
+                                                    duration: 0.4,
+                                                    ease: 'power2.in',
+                                                });
+                                            }}
                                         />
                                     </a>
 
                                     <a href={projGithub} target="_blank" rel='noopener noreferrer'>
                                         <IconButton
-                                        icon={<FaGithub size='24' color={themeMode === 'light' ? '#111' : '#fff'} />}
-                                        variant='unstyled'
-                                        rounded='full'
-                                        display='flex'
-                                        justifyContent='center'
-                                        bgColor={themeMode === 'light' ? '#fff' : '#111'}
-                                    />
+                                            icon={
+                                                <Box className='animated-icon' color='#111'>
+                                                    <FaGithub size='24' />
+                                                </Box>
+                                            }
+                                            variant='unstyled'
+                                            rounded='full'
+                                            display='flex'
+                                            justifyContent='center'
+                                            bgColor='#fff'
+                                            onMouseEnter={(e) => {
+                                                const icon = e.currentTarget.querySelector('.animated-icon');
+                                                gsap.to(e.currentTarget, {
+                                                    backgroundColor: themeColor,
+                                                    boxShadow: '0 0 4px 2px #fff',
+                                                    duration: 1,
+                                                });
+                                                gsap.fromTo(icon,
+                                                    { y: 10, opacity: 0 },
+                                                    { y: 0, opacity: 1, color: '#fff', duration: 1, ease: 'power2.out' }
+                                                );
+                                            }}
+                                            onMouseLeave={(e) => {
+                                                const icon = e.currentTarget.querySelector('.animated-icon');
+                                                gsap.to(e.currentTarget, {
+                                                    backgroundColor: '#fff',
+                                                    boxShadow: `0 0 4px 2px #111`,
+                                                    duration: 1,
+                                                });
+                                                gsap.to(icon, {
+                                                    opacity: 1,
+                                                    color: '#111',
+                                                    duration: 0.4,
+                                                    ease: 'power2.in',
+                                                });
+                                            }}
+                                        />
                                     </a>
                                 </Flex>
                             </VStack>

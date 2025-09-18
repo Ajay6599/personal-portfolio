@@ -3,7 +3,7 @@ import { personalData } from "../assets/Assets";
 import { useContext } from "react";
 import { ThemeContext } from "../context/ThemeContextProvider";
 
-export const ContactMe = ({ area }) => {
+export const ContactMe = ({ area, collectRef }) => {
 
     const { themeColor, themeMode } = useContext(ThemeContext);
 
@@ -18,6 +18,7 @@ export const ContactMe = ({ area }) => {
                 personalData.map(({ text, info, contact }, idx) => (
                     <Grid
                         key={idx}
+                        ref={collectRef}
                         // border='1px solid'
                         gridTemplateColumns='1fr 2fr'
                         alignItems='center'
@@ -42,6 +43,7 @@ export const ContactMe = ({ area }) => {
                                 boxShadow: '1px 1px 2px #505050'
                             }}
                             boxShadow='1px 1px 2px #505050'
+                            cursor='default'
                         />
                         <Flex
                             // border='1px solid red'

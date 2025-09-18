@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import { SlMinus, SlPlus } from "react-icons/sl";
 import { ThemeContext } from "../context/ThemeContextProvider";
 
-export const Skill = ({ skillArr }) => {
+export const Skill = ({ skillArr, skillRef }) => {
 
     const { themeColor, themeMode } = useContext(ThemeContext);
 
@@ -19,6 +19,7 @@ export const Skill = ({ skillArr }) => {
         <Accordion
             allowToggle
             w='100%'
+            ref={skillRef}
         >
 
             {

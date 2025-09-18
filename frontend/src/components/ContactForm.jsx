@@ -1,8 +1,12 @@
-import { Button, Flex, FormControl, Grid, Input, Textarea, useToast, VStack } from "@chakra-ui/react";
+import { Box, Button, Flex, FormControl, Grid, Input, Text, Textarea, useToast, VStack } from "@chakra-ui/react";
 import axios from 'axios';
-import { useState } from "react";
+import gsap from "gsap";
+import { useContext, useRef, useState } from "react";
+import { IoMdCheckmarkCircle, IoMdSend } from "react-icons/io";
+import { ThemeContext } from "../context/ThemeContextProvider";
 
-export const ContactForm = ({ area, onColor }) => {
+export const ContactForm = ({ area, onColor, formRef }) => {
+    let { themeColor } = useContext(ThemeContext);
 
     let [contactUser, setContactUser] = useState({
         name: '',
@@ -21,23 +25,107 @@ export const ContactForm = ({ area, onColor }) => {
         }));
     };
 
+    let iconRef = useRef(null);
+    let sendTextRef = useRef([]);
+    const [iconSent, setIconSent] = useState(false);
+
+    const launchAnimation = () => {
+        const icon = iconRef.current;
+        const button = icon.closest('button');
+        let sendBtnWidth = button.offsetWidth;
+
+        let trail = [];
+
+        gsap.to(sendTextRef.current, {
+            y: 10,
+            opacity: 0,
+            duration: 1,
+            stagger: 0.2
+        })
+        gsap.set(icon, { x: 0, y: 0 });
+
+        gsap.to(icon, {
+            duration: 2,
+            x: sendBtnWidth,
+            ease: 'none',
+            onUpdate: () => {
+                const x = gsap.getProperty(icon, 'x');
+                const y = 2 * Math.sin(x * 0.12);  // Wave motion
+
+                gsap.set(icon, { y: y });
+
+                // Store trail point
+                trail.push({ x, y });
+
+                // Limit trail size
+                if (trail.length > 30) trail.shift();
+
+                // Delay smoke creation by 13 frames
+                if (trail.length > 13) {
+                    const pos = trail[trail.length - 13];
+                    createSmoke(pos.x, pos.y, button);
+                }
+            }
+        });
+    };
+
+    function createSmoke(x, y, container) {
+        const smoke = document.createElement('div');
+        smoke.style.position = 'absolute';
+        smoke.style.width = '10px';
+        smoke.style.height = '2px';
+        smoke.style.backgroundColor = '#404040';
+        smoke.style.borderRadius = '50%';
+        smoke.style.pointerEvents = 'none';
+        smoke.style.zIndex = '0';
+        smoke.style.left = '0';
+        smoke.style.top = '50%';
+        smoke.style.transform = `translate(${x + 2}px, ${y}px)`; // offsetX = 2
+        container.appendChild(smoke);
+
+        // Animate movement
+        gsap.to(smoke, {
+            duration: 2,
+            x: '+=40',
+            ease: 'none',
+            onComplete: () => smoke.remove()
+        });
+
+        // Fade and scale
+        gsap.to(smoke, {
+            duration: 1,
+            opacity: 0,
+            scale: 1.4,
+            ease: 'power1.out'
+        });
+    }
+
     let toast = useToast();
 
     const submitHandler = async (e) => {
         e.preventDefault();
+        launchAnimation();
         try {
             // const res = await axios.post(`http://localhost:8080/contact`, contactUser);
             const res = await axios.post(`${process.env.REACT_APP_API_URL}/contact`, contactUser);
-            // console.log(`${process.env.REACT_APP_API_URL?.replace(/\/+$/, '')}/contact`);
-            // console.log(`${process.env.REACT_APP_API_URL}/contact`);
             // console.log(res.data);
-            setContactUser({
-                name: '',
-                email: '',
-                phoneNumber: '',
-                emailSub: '',
-                message: '',
-            });
+            setIconSent(true);
+            gsap.killTweensOf(sendTextRef.current);
+            gsap.killTweensOf(iconRef.current);
+            gsap.set(iconRef.current, { x: 0, y: 0, rotate: 0 });
+            setTimeout(() => {
+                sendTextRef.current.forEach((el) => {
+                    gsap.fromTo(el,
+                        { opacity: 0, y: -10, stagger: 0.2, },
+                        {
+                            opacity: 1,
+                            y: 0,
+                            duration: 0.5,
+                            ease: "power2.out"
+                        }
+                    );
+                });
+            }, 50); // Delay ensures DOM has updated
             toast({
                 title: 'Sent Message',
                 description: res.data.msg,
@@ -45,6 +133,19 @@ export const ContactForm = ({ area, onColor }) => {
                 duration: 5000,
                 isClosable: true,
             });
+            setContactUser({
+                name: '',
+                email: '',
+                phoneNumber: '',
+                emailSub: '',
+                message: '',
+            });
+
+            setTimeout(() => {
+                sendTextRef.current = [];
+                setIconSent(false);
+                gsap.set(iconRef.current, { x: 0, y: 0, rotate: -45 });
+            }, 3000);
         } catch (error) {
             console.log(error);
 
@@ -63,7 +164,16 @@ export const ContactForm = ({ area, onColor }) => {
                 // Handle JS Error object
                 errorMsg = error.message;
             }
-
+            setIconSent(false);
+            gsap.killTweensOf(sendTextRef.current);
+            gsap.killTweensOf(iconRef.current);
+            gsap.set(iconRef.current, { x: 0, y: 0 });
+            sendTextRef.current.forEach((el) => {
+                gsap.set(el, {
+                    opacity: 1,
+                    y: 0,
+                });
+            });
             toast({
                 title: 'Submission Failed',
                 description: errorMsg,
@@ -74,15 +184,38 @@ export const ContactForm = ({ area, onColor }) => {
         }
     }
 
+    const handleMouseEnter = () => {
+        let tl = gsap.timeline();
+        gsap.to(iconRef.current, {
+            rotate: 0,
+            duration: 0.5,
+            ease: 'power2.out'
+        });
+        tl.from(sendTextRef.current, {
+            y: -10,
+            opacity: 0,
+            duration: 0.6,
+            color: themeColor,
+            ease: "sine.inOut",
+            stagger: 0.05
+        });
+    };
+    const handleMouseLeave = () => {
+        gsap.to(iconRef.current, {
+            rotate: !iconSent ? -45 : 0,
+            duration: 0.5,
+            ease: 'power2.out'
+        });
+    };
+
     return (
         <VStack
             // border='1px solid blue'
             gridArea={area}
         >
 
-            <FormControl as='form' onSubmit={submitHandler}>
+            <FormControl as='form' onSubmit={submitHandler} ref={formRef}>
                 <Grid
-                    // border='1px solid red'
                     gridTemplateColumns={{
                         base: 'repeat(1, 1fr)',
                         sm: 'repeat(1, 1fr)',
@@ -203,7 +336,6 @@ export const ContactForm = ({ area, onColor }) => {
                     </Flex>
 
                     <Flex
-                        // border='1px solid blue'
                         gridArea='btn'
                         justifyContent='center'
                     >
@@ -213,31 +345,39 @@ export const ContactForm = ({ area, onColor }) => {
                             border='2px solid #808080'
                             borderRadius='20px'
                             w='140px'
+                            display='flex'
+                            alignItems='center'
+                            justifyContent='center'
+                            gap='1'
                             pos='relative'
-                            zIndex='1'
-                            _after={{
-                                content: '""',
-                                position: 'absolute',
-                                top: '50%',
-                                left: '50%',
-                                width: "35px",
-                                height: "10px",
-                                borderRadius: '20px',
-                                // backgroundColor: onColor,
-                                color: '#111',
-                                zIndex: '-1',
-                                transform: 'translate(-50%, -50%)',
-                                transition: 'all 1s ease-in-out'
-                            }}
-                            _hover={{
-                                color: 'white',
-                                _after: {
-                                    backgroundColor: onColor,
-                                    transform: 'translate(-50%, -50%) scale(3.75, 3.2)',
-                                }
-                            }}
+                            overflow='hidden'
+                            onMouseEnter={handleMouseEnter}
+                            onMouseLeave={handleMouseLeave}
                         >
-                            Send Message
+                            <Box
+                                ref={iconRef}
+                                pos='absolute'
+                                left='25px'
+                                top='50%'
+                                transform={`translateY(-50%) ${!iconSent ? 'rotate(-45deg)' : 'rotate(0deg)'}`}
+                                zIndex='1'
+                            >
+                                {!iconSent ? <IoMdSend size='20' /> : <IoMdCheckmarkCircle size='20' />}
+                            </Box>
+                            <Text fontWeight="bold">
+                                {
+                                    (!iconSent ? "Send" : "Sent").split("").map((char, i) => (
+                                        <Box
+                                            as="span"
+                                            key={i}
+                                            ref={el => sendTextRef.current[i] = el}
+                                            display="inline-block"
+                                        >
+                                            {char}
+                                        </Box>
+                                    ))
+                                }
+                            </Text>
                         </Button>
                     </Flex>
 

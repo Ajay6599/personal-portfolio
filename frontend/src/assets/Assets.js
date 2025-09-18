@@ -124,4 +124,54 @@ export const projectDetails = [
 
 export const resume = {
     AjayCv
-}
+};
+
+export const randomCode = {
+    frontendSnippets: [
+        `const [count, setCount] = useState(0);`,
+        `useEffect(() => { fetchData(); }, []);`,
+        `return <div className="App">Hello World</div>;`,
+        `button.addEventListener('click', handleClick);`,
+        `const theme = localStorage.getItem("theme");`,
+        `document.querySelector("#root").innerHTML = "<h1>React!</h1>";`,
+    ],
+    backendSnippets: [
+        `const express = require('express');`,
+        `mongoose.connect(process.env.MONGO_URI);`,
+        `app.get('/api/posts', async (req, res) => {...});`,
+        `const user = await User.findById(req.params.id);`,
+        `res.status(500).json({ error: err.message });`,
+        `const token = jwt.sign({ id: user._id }, secret);`
+    ]
+};
+
+export const codeBlocks = [
+    {
+        id: 1,
+        frontendSnippets: [
+            `const [count, setCount] = useState(0);`,
+            `useEffect(() => { fetchData(); }, []);`,
+            `return <div className="App">Hello World</div>;`,
+            `button.addEventListener('click', handleClick);`,
+            `const theme = localStorage.getItem("theme");`,
+            `document.querySelector("#root").innerHTML = "<h1>React!</h1>";`,
+        ],
+        speed: 5,
+        initialTop: "10%",
+        initialLeft: "10%"
+    },
+    {
+        id: 2,
+        backendSnippets: [
+            `const express = require('express');`,
+            `mongoose.connect(process.env.MONGO_URI);`,
+            `app.get('/api/posts', async (req, res) => {...});`,
+            `const user = await User.findById(req.params.id);`,
+            `res.status(500).json({ error: err.message });`,
+            `const token = jwt.sign({ id: user._id }, secret);`
+        ],
+        speed: 7,
+        initialTop: "40%",
+        initialLeft: "70%"
+    }
+];

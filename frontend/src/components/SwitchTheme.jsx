@@ -1,9 +1,11 @@
 import { Flex, Grid, IconButton, Text, useBoolean } from "@chakra-ui/react";
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { FaCog, FaMoon, FaSun } from "react-icons/fa";
 import { ThemeContext } from "../context/ThemeContextProvider";
-// import { FaCheck } from "react-icons/fa6";
 import { CgCheck } from "react-icons/cg";
+import { GsapContext } from "../context/GsapContextProvider";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 
 export const SwitchTheme = () => {
 
@@ -20,9 +22,45 @@ export const SwitchTheme = () => {
         setSelectTheme(color);
     };
 
+    const { masterTimeline } = useContext(GsapContext);
+
+    let themeWrapperRef = useRef(null);
+    let themeIconRef = useRef([]);
+
+    const addIconRef = (el) => {
+        if (el && !themeIconRef.current.includes(el)) {
+            themeIconRef.current.push(el);
+        }
+    };
+
+    useGSAP(() => {
+        if (!isDrag) return;
+
+        let tl = gsap.timeline();
+
+        tl.from(themeWrapperRef.current, {
+            opacity: 0,
+            duration: 0.8,
+            ease: "power2.in"
+        });
+        tl.from(themeIconRef.current, {
+            opacity: 0,
+            // y: -10,
+            duration: 0.8,
+            stagger: 0.8,
+            ease: "power2.in"
+        });
+
+        masterTimeline.current.add(tl);
+        return () => {
+            tl.kill();
+        };
+    }, []);
+
     return (
         <Flex
             // border='1px solid green'
+            ref={themeWrapperRef}
             transition='right 1s ease-in-out'
             pos='fixed'
             zIndex='1000'
@@ -40,6 +78,7 @@ export const SwitchTheme = () => {
             <Grid gap='2'>
 
                 <IconButton
+                    ref={addIconRef}
                     variant='unstyled'
                     display='flex'
                     // border='1px solid'
@@ -55,6 +94,7 @@ export const SwitchTheme = () => {
                     onClick={setIsDrag.toggle}
                 />
                 <IconButton
+                    ref={addIconRef}
                     variant='unstyled'
                     borderRadius='50%'
                     display='flex'

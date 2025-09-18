@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { SlMinus, SlPlus } from "react-icons/sl";
 import { ThemeContext } from "../context/ThemeContextProvider";
 
-export const Education = ({ eduArr }) => {
+export const Education = ({ eduArr, eduRef }) => {
 
     const { themeMode } = useContext(ThemeContext);
 
@@ -11,6 +11,7 @@ export const Education = ({ eduArr }) => {
         <Accordion
             allowToggle
             w='100%'
+            ref={eduRef}
         >
 
             {
